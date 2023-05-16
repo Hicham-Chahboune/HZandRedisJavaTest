@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  hazelcast:
+    image: hazelcast/hazelcast:5.2.1
+    environment:
+      - HZ_CLUSTERNAME=hello-world
+    ports:
+      - "5701:5701"
+    networks:
+      - hzn
+  management-center:
+    image: hazelcast/management-center:5.2.1
+    ports:
+    - "8080:8080"
+    environment:
+    - MC_DEFAULT_CLUSTER=dev
+    - MC_DEFAULT_CLUSTER_MEMBERS=hazelcast
+    networks:
+      - hzn
+networks:
+  hzn:
+    driver: bridge
